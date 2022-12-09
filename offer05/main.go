@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func main()  {
+func main() {
 	fmt.Println(replaceSpace("We are happy."))
 	fmt.Println(replaceSpace("     "))
 }
@@ -25,46 +25,45 @@ func replaceSpace2(s string) string {
 	//计算需要替换的空间
 	n := strings.Count(s, old)
 
-	var b strings.Builder //定义一个string builder
+	var b strings.Builder  //定义一个string builder
 	b.Grow(len(s) + count) //预设容量
 	start := 0
 	for i := 0; i < n; i++ {
 		j := start
 		j += strings.Index(s[start:], old)
-		b.WriteString(s[start:j])//将截取的字符串放到builder里
-		b.WriteString("%20")//再加入需要替换的字符串
+		b.WriteString(s[start:j]) //将截取的字符串放到builder里
+		b.WriteString("%20")      //再加入需要替换的字符串
 		start = j + len(old)
 	}
 	b.WriteString(s[start:])
 
-	return b.String()//返回builder累积的字符串
+	return b.String() //返回builder累积的字符串
 
 }
-
 
 //解法3 ，利用中间切片/数组
 func replaceSpace(s string) string {
 	b := []byte(s) //string转[]byte
 	count := 0
-	for _,value := range b{
+	for _, value := range b {
 		if value == ' ' {
-			count+=2
+			count += 2
 		}
 	}
 
-	replaces:= make([]byte,len(b)+count)
-	n :=0
-	for _,value := range b{
+	replaces := make([]byte, len(b)+count)
+	n := 0
+	for _, value := range b {
 		if value == ' ' {
 			replaces[n] = '%'
 			replaces[n+1] = '2'
 			replaces[n+2] = '0'
-			n = n+2
+			n = n + 2
 		} else {
 			replaces[n] = value
 		}
 		n++
 	}
 
-	return string(replaces)//[]byte转string
+	return string(replaces) //[]byte转string
 }
